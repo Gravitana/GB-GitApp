@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="@dimen/items_default_padding" >
+
+    <ImageView
+        android:id="@+id/user_avatar_image_view"
+        android:layout_width="@dimen/user_item_avatar_size"
+        android:layout_height="@dimen/user_item_avatar_size"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/user_avatar_description" />
+
+    <TextView
+        android:id="@+id/user_login_text_view"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/user_item_login_height"
+        android:textStyle="bold"
+        android:textSize="@dimen/user_item_login_text_size"
+        android:paddingLeft="@dimen/items_default_padding"
+        app:layout_constraintStart_toEndOf="@+id/user_avatar_image_view"
+        app:layout_constraintTop_toTopOf="@+id/user_avatar_image_view"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/user_id_text_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingLeft="@dimen/items_default_padding"
+        app:layout_constraintStart_toEndOf="@+id/user_avatar_image_view"
+        app:layout_constraintTop_toBottomOf="@+id/user_login_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/user_avatar_image_view" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
