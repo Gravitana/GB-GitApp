@@ -1,4 +1,4 @@
-package ru.gravitana.gitapp
+package ru.gravitana.gitapp.domain.entities
 
 data class UserEntity (
     val login: String,

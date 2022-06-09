@@ -1,4 +1,6 @@
-package ru.gravitana.gitapp
+package ru.gravitana.gitapp.domain.repos
+
+import ru.gravitana.gitapp.domain.entities.UserEntity
 
 interface UsersRepo {
     fun getUsers(

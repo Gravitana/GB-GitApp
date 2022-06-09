@@ -1,7 +1,9 @@
-package ru.gravitana.gitapp
+package ru.gravitana.gitapp.data
 
 import android.os.Handler
 import android.os.Looper
+import ru.gravitana.gitapp.domain.entities.UserEntity
+import ru.gravitana.gitapp.domain.repos.UsersRepo
 
 private const val DATA_LOADING_FAKE_DELAY = 3_000L
 
