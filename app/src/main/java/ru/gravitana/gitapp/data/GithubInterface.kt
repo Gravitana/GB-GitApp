@@ -9,7 +9,7 @@ import ru.gravitana.gitapp.domain.entities.UserEntity
 interface GithubInterface {
 
     @GET("users")
-    fun getUsers() : Call<List<UserEntity>>
+    fun getUsers() : Call<List<UserDto>>
 
     companion object {
 
