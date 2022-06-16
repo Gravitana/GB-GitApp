@@ -6,22 +6,37 @@ import coil.load
 import ru.gravitana.gitapp.databinding.ActivityProfileBinding
 import ru.gravitana.gitapp.domain.entities.UserEntity
 
-class ProfileActivity : AppCompatActivity() {
+class ProfileActivity : AppCompatActivity(), ProfileContract.View {
     private lateinit var binding: ActivityProfileBinding
+
+    private lateinit var presenter: ProfileContract.Presenter
 
      override fun onCreate(savedInstanceState: Bundle?) {
          binding = ActivityProfileBinding.inflate(layoutInflater)
          super.onCreate(savedInstanceState)
          setContentView(binding.root)
 
-         val userEntity = UserEntity(
-             intent.getStringExtra("login").toString(),
-             intent.getLongExtra("id", 0).toLong(),
-             intent.getStringExtra("avatar_url").toString()
-         )
+         presenter = takePresenter()
+         presenter.attach(this)
+    }
 
-         binding.userLoginTextView.text = userEntity.login
-         binding.userIdTextView.text = userEntity.id.toString()
-         binding.userAvatarImageView.load(userEntity.avatarUrl)
+    private fun takePresenter(): ProfileContract.Presenter {
+        return lastCustomNonConfigurationInstance as? ProfileContract.Presenter
+            ?: ProfilePresenter(intent)
+    }
+
+    override fun onDestroy() {
+        presenter.detach()
+        super.onDestroy()
+    }
+
+    override fun onRetainCustomNonConfigurationInstance(): ProfileContract.Presenter {
+        return presenter
+    }
+
+    override fun showProfile(profile: UserEntity) {
+        binding.userLoginTextView.text = profile.login
+        binding.userIdTextView.text = profile.id.toString()
+        binding.userAvatarImageView.load(profile.avatarUrl)
     }
 }
