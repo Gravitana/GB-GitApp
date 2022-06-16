@@ -7,12 +7,11 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.gravitana.gitapp.app
 import ru.gravitana.gitapp.domain.entities.UserEntity
-import ru.gravitana.gitapp.domain.repos.UsersRepo
 import ru.gravitana.gitapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), UsersContract.View {
     private lateinit var binding: ActivityMainBinding
-    private val adapter = UsersAdapter()
+    private val adapter = UsersAdapter { userEntity: UserEntity -> userItemClicked(userEntity) }
 
     private lateinit var presenter: UsersContract.Presenter
 
@@ -66,5 +65,9 @@ class MainActivity : AppCompatActivity(), UsersContract.View {
     private fun initRecyclerView() {
         binding.usersRecyclerview.layoutManager = LinearLayoutManager(this)
         binding.usersRecyclerview.adapter = adapter
+    }
+
+    private fun userItemClicked(userEntity: UserEntity) {
+        Toast.makeText(this, "Clicked on: ${userEntity.login}", Toast.LENGTH_LONG).show()
     }
 }

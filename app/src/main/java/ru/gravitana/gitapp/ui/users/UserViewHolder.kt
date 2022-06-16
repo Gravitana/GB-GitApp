@@ -13,9 +13,10 @@ class UserViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
 ) {
     private val binding = ItemUserBinding.bind(itemView)
 
-    fun bind(userEntity: UserEntity) {
+    fun bind(userEntity: UserEntity, userClickListener: (UserEntity) -> Unit) {
         binding.userAvatarImageView.load(userEntity.avatarUrl)
         binding.userLoginTextView.text = userEntity.login
         binding.userIdTextView.text = userEntity.id.toString()
+        binding.root.setOnClickListener { userClickListener(userEntity) }
     }
 }
