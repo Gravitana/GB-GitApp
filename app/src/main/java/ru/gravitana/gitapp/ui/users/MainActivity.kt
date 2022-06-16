@@ -1,5 +1,6 @@
 package ru.gravitana.gitapp.ui.users
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -8,10 +9,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ru.gravitana.gitapp.app
 import ru.gravitana.gitapp.domain.entities.UserEntity
 import ru.gravitana.gitapp.databinding.ActivityMainBinding
+import ru.gravitana.gitapp.ui.profile.ProfileActivity
 
 class MainActivity : AppCompatActivity(), UsersContract.View {
     private lateinit var binding: ActivityMainBinding
     private val adapter = UsersAdapter { userEntity: UserEntity -> userItemClicked(userEntity) }
+
+    private lateinit var profileIntent: Intent
 
     private lateinit var presenter: UsersContract.Presenter
 
@@ -24,6 +28,8 @@ class MainActivity : AppCompatActivity(), UsersContract.View {
 
         presenter = takePresenter()
         presenter.attach(this)
+
+        profileIntent = Intent(this, ProfileActivity::class.java)
     }
 
     private fun takePresenter(): UsersContract.Presenter {
@@ -68,6 +74,7 @@ class MainActivity : AppCompatActivity(), UsersContract.View {
     }
 
     private fun userItemClicked(userEntity: UserEntity) {
-        Toast.makeText(this, "Clicked on: ${userEntity.login}", Toast.LENGTH_LONG).show()
+//        Toast.makeText(this, "Clicked on: ${userEntity.login}", Toast.LENGTH_LONG).show()
+        startActivity(profileIntent)
     }
 }
