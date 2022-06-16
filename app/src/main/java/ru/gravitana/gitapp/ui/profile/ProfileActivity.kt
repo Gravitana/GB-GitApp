@@ -1,7 +1,7 @@
 package ru.gravitana.gitapp.ui.profile
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import ru.gravitana.gitapp.databinding.ActivityProfileBinding
 import ru.gravitana.gitapp.domain.entities.UserEntity
@@ -11,13 +11,13 @@ class ProfileActivity : AppCompatActivity(), ProfileContract.View {
 
     private lateinit var presenter: ProfileContract.Presenter
 
-     override fun onCreate(savedInstanceState: Bundle?) {
-         binding = ActivityProfileBinding.inflate(layoutInflater)
-         super.onCreate(savedInstanceState)
-         setContentView(binding.root)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        binding = ActivityProfileBinding.inflate(layoutInflater)
+        super.onCreate(savedInstanceState)
+        setContentView(binding.root)
 
-         presenter = takePresenter()
-         presenter.attach(this)
+        presenter = takePresenter()
+        presenter.attach(this)
     }
 
     private fun takePresenter(): ProfileContract.Presenter {

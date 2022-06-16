@@ -4,18 +4,17 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
-import ru.gravitana.gitapp.domain.entities.UserEntity
 
 interface GithubInterface {
 
     @GET("users")
-    fun getUsers() : Call<List<UserDto>>
+    fun getUsers(): Call<List<UserDto>>
 
     companion object {
 
         var BASE_URL = "https://api.github.com/"
 
-        fun create() : GithubInterface {
+        fun create(): GithubInterface {
 
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())

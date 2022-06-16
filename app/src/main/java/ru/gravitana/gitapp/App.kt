@@ -3,7 +3,6 @@ package ru.gravitana.gitapp
 import android.app.Application
 import android.content.Context
 import androidx.fragment.app.Fragment
-import ru.gravitana.gitapp.data.FakeUsersRepoImpl
 import ru.gravitana.gitapp.data.RetrofitUsersRepoImpl
 import ru.gravitana.gitapp.domain.repos.UsersRepo
 

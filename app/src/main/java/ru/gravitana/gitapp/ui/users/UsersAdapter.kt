@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.gravitana.gitapp.domain.entities.UserEntity
 
-class UsersAdapter (
+class UsersAdapter(
     private val userClickListener: (UserEntity) -> Unit
-        ) : RecyclerView.Adapter<UserViewHolder>() {
+) : RecyclerView.Adapter<UserViewHolder>() {
     private val data = mutableListOf<UserEntity>()
 
     init {

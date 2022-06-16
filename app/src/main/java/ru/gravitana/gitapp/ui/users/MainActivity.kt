@@ -7,8 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.gravitana.gitapp.app
-import ru.gravitana.gitapp.domain.entities.UserEntity
 import ru.gravitana.gitapp.databinding.ActivityMainBinding
+import ru.gravitana.gitapp.domain.entities.UserEntity
 import ru.gravitana.gitapp.ui.profile.ProfileActivity
 
 class MainActivity : AppCompatActivity(), UsersContract.View {
