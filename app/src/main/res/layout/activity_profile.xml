@@ -22,14 +22,14 @@
         android:textStyle="bold"
         android:textSize="@dimen/user_item_login_text_size"
         android:textAlignment="center"
-        android:text="Login"/>
+        tools:text="Login"/>
 
     <TextView
         android:id="@+id/user_id_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:text="ID" />
+        tools:text="ID" />
 
 
 </LinearLayout>

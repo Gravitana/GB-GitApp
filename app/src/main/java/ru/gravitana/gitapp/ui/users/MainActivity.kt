@@ -75,6 +75,11 @@ class MainActivity : AppCompatActivity(), UsersContract.View {
 
     private fun userItemClicked(userEntity: UserEntity) {
 //        Toast.makeText(this, "Clicked on: ${userEntity.login}", Toast.LENGTH_LONG).show()
+
+        profileIntent.putExtra("login", userEntity.login);
+        profileIntent.putExtra("id", userEntity.id);
+        profileIntent.putExtra("avatar_url", userEntity.avatarUrl);
+
         startActivity(profileIntent)
     }
 }
