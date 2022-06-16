@@ -1,19 +1,23 @@
 package ru.gravitana.gitapp.ui.users
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.gravitana.gitapp.app
-import ru.gravitana.gitapp.domain.entities.UserEntity
-import ru.gravitana.gitapp.domain.repos.UsersRepo
 import ru.gravitana.gitapp.databinding.ActivityMainBinding
+import ru.gravitana.gitapp.domain.entities.UserEntity
+import ru.gravitana.gitapp.ui.profile.ProfileActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), UsersContract.View {
     private lateinit var binding: ActivityMainBinding
-    private val adapter = UsersAdapter()
-    private val usersRepo: UsersRepo by lazy { app.usersRepo }
+    private val adapter = UsersAdapter { userEntity: UserEntity -> userItemClicked(userEntity) }
+
+    private lateinit var profileIntent: Intent
+
+    private lateinit var presenter: UsersContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -21,37 +25,47 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initViews()
+
+        presenter = takePresenter()
+        presenter.attach(this)
+
+        profileIntent = Intent(this, ProfileActivity::class.java)
+    }
+
+    private fun takePresenter(): UsersContract.Presenter {
+        return lastCustomNonConfigurationInstance as? UsersContract.Presenter
+            ?: UsersPresenter(app.usersRepo)
+    }
+
+    override fun onDestroy() {
+        presenter.detach()
+        super.onDestroy()
+    }
+
+    override fun onRetainCustomNonConfigurationInstance(): UsersContract.Presenter {
+        return presenter
     }
 
     private fun initViews() {
         binding.refreshButton.setOnClickListener {
-            loadData()
+            presenter.onRefresh()
         }
 
         initRecyclerView()
         showProgress(false)
     }
 
-    private fun loadData() {
-        showProgress(true)
-        usersRepo.getUsers(
-            onSuccess = {
-                showProgress(false)
-                onDataLoaded(it)
-            },
-            onError = {
-                showProgress(false)
-                onError(it)
-            }
-        )
+    override fun showUsers(users: List<UserEntity>) {
+        adapter.setData(users)
     }
 
-    private fun onDataLoaded(data: List<UserEntity>) {
-        adapter.setData(data)
-    }
-
-    private fun onError(throwable: Throwable) {
+    override fun showError(throwable: Throwable) {
         Toast.makeText(this, throwable.message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showProgress(inProgress: Boolean) {
+        binding.progressBar.isVisible = inProgress
+        binding.usersRecyclerview.isVisible = !inProgress
     }
 
     private fun initRecyclerView() {
@@ -59,8 +73,13 @@ class MainActivity : AppCompatActivity() {
         binding.usersRecyclerview.adapter = adapter
     }
 
-    private fun showProgress(inProgress: Boolean) {
-        binding.progressBar.isVisible = inProgress
-        binding.usersRecyclerview.isVisible = !inProgress
+    private fun userItemClicked(userEntity: UserEntity) {
+//        Toast.makeText(this, "Clicked on: ${userEntity.login}", Toast.LENGTH_LONG).show()
+
+        profileIntent.putExtra("login", userEntity.login);
+        profileIntent.putExtra("id", userEntity.id);
+        profileIntent.putExtra("avatar_url", userEntity.avatarUrl);
+
+        startActivity(profileIntent)
     }
 }

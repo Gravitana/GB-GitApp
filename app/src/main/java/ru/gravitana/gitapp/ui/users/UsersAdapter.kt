@@ -5,7 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.gravitana.gitapp.domain.entities.UserEntity
 
-class UsersAdapter : RecyclerView.Adapter<UserViewHolder>() {
+class UsersAdapter(
+    private val userClickListener: (UserEntity) -> Unit
+) : RecyclerView.Adapter<UserViewHolder>() {
     private val data = mutableListOf<UserEntity>()
 
     init {
@@ -17,7 +19,7 @@ class UsersAdapter : RecyclerView.Adapter<UserViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = UserViewHolder(parent)
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), userClickListener)
     }
 
     override fun getItemCount() = data.size

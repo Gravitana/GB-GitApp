@@ -11,12 +11,13 @@ class RetrofitUsersRepoImpl : UsersRepo {
     private val apiInterface = GithubInterface.create().getUsers()
 
     override fun getUsers(onSuccess: (List<UserEntity>) -> Unit, onError: ((Throwable) -> Unit)?) {
-        apiInterface.clone().enqueue(object : Callback<List<UserDto>>{
+        apiInterface.clone().enqueue(object : Callback<List<UserDto>> {
             override fun onResponse(
                 call: Call<List<UserDto>>,
                 response: Response<List<UserDto>>
             ) {
-                response.body()?.let { element -> onSuccess(element.map { convertDtoToUserEntity(it) }) }
+                response.body()
+                    ?.let { element -> onSuccess(element.map { convertDtoToUserEntity(it) }) }
             }
 
             override fun onFailure(call: Call<List<UserDto>>, t: Throwable) {
